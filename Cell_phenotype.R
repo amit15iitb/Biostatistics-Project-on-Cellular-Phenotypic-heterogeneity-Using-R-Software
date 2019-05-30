@@ -1,0 +1,81 @@
+###############data reading 
+data=read.csv("CellularPhenotypicheterogeneity.csv",sep=",")
+data[ , ! apply( data , 2 , function(x) all(is.na(x)) ) ]
+
+################################################################################
+#ans(1)
+#################column containing the cell's speed
+data[,4]
+################################################################################
+#ans(2)
+#############13th row and second column
+data[13,2]
+################################################################################
+#ans(3)
+##########phenotype of the cell in the 10th row
+a=data[,2]
+a[10]
+###############################################################################
+#ans(4)
+##############length function returns the number of elements in a vector
+length(a)
+################################################################################
+#ans(5)
+sum=0
+count=0
+for (i in 1:nrow(data))
+{
+  if(data[i,2]=='migratory')
+  {
+    #############################################################################
+    ########################################### "Migratory" phenotype of the cell  
+    print(i)
+    sum=sum+data[i,4]
+    count=count+1
+  }
+}
+#################################################################################
+################################# average speed of the "Migratory" phenotype cell
+avg_cell_speed=(sum/count)
+print(avg_cell_speed)
+cell_phenotype=data$Cell.Phenotype
+################################################################################
+##########################################subsetting of the migratory cell data
+data_migratory=subset(data,cell_phenotype=="migratory")
+subset_speed=data_migratory$Cell.speed...m.hr.
+
+
+
+####################### mode of the cell's speed
+Mode = function(x){
+  uniq=unique(x)
+  uniq[which.max(tabulate(match(x,uniq)))]
+}
+Mode_speed=Mode(subset_speed)
+print(Mode_speed)
+############################# mean of the cell's speed
+mean=function(x){
+  avg=sum(x)/length(x)
+}
+avg_speed=mean(subset_speed)
+print(avg_speed)
+##################################################################################################
+####################box_plot
+# Plot the chart.
+boxplot(data$Cell.speed...m.hr., data = data, xlab = "",
+        ylab = "Cell_speed", main = "BOX PLOT")
+
+##################################################################################################
+######################hsitogram_plot
+# Create the histogram.
+hist(data$Cell.speed...m.hr.,xlab = "Weight",col = "blue",border = "red")
+
+#################################################################################################
+#################################bar_graph
+# Create the histogram.
+#barplot(data$Cell.speed...m.hr.,xlab = "cell_speed",col = "yellow",border = "blue")
+###############################################################################################
+###################### pie_chart
+# Create the histogram.
+pie(data$Cell.speed...m.hr.,xlab = "cell_speed",col = "yellow",border = "blue")
+
